@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 2</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+
+    <div id="app">
+        
+        <!-- Interpolación -->
+        <!-- Representar el estado del componente en el template -->
+        <p>{{ counter }}</p>
+
+
+        <!-- V-Bind -->
+        <!-- Para cambiar los estados de los atributos html -->
+        <img
+            v-bind:src="imgAngular"
+            v-bind:width="imgSize"
+        >
+    
+        <!-- v-ON -->
+        <!-- Para manejar eventos desde vueJs -->
+        <button v-on:click="counter++">Counter</button>
+    </div>
+    <script>
+
+        const { createApp } = Vue
+        createApp({
+            data() {
+                return {
+                    counter: 0,
+                    imgVue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png',
+                    imgAngular: 'https://angular.io/assets/images/logos/angular/angular.svg',
+                    imgSize: 50
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
