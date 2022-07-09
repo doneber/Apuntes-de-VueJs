@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <div id="app">
+        <h1 class="text-center" >Mis imagenes de tecnologias web</h1>
+        <div class="text-center">
+            <img v-bind:src="imageULRs[index]" alt="" width="500">
+        </div>
+        <br>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary m-2" v-on:click="index = index<=0?sizeList-1:index-1">Anterior</button>
+            <button type="button" class="btn btn-primary m-2" v-on:click="index=(index+1)%3">Siguiente</button>
+        </div>
+    </div>
+    <script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                index: 2,
+                imageULRs: [
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png',
+                    'https://angular.io/assets/images/logos/angular/angular.svg',
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/800px-React.svg.png'
+                ],
+                sizeList: 3,
+            }
+        },
+        
+    }).mount('#app')
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
