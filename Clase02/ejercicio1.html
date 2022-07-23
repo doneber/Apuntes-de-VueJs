@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+<script src="https://unpkg.com/vue@3"></script>
+
+<main id="app" class="container">
+  <form>
+    <label for="">
+      Nombres:
+    <input type="text" v-model="nombres">
+    </label>
+    <label for="">
+      Apellidos:
+    <input type="text" v-model="apellidos">
+    </label>
+    <input type="submit">
+  </form>
+  <hr>
+  <article>
+    <header>VIP</header>
+    <div>
+      {{ fullName }}
+    </div>
+  </article>
+</main>
+
+<script>
+  const { createApp } = Vue
+  createApp({
+    data(){
+      return {
+        nombres: '',
+        apellidos: ''
+      }
+    },
+    methods: {
+      
+    },
+    computed: {
+      fullName(){
+        if (this.nombres != '')
+          return this.nombres + ' ' + this.apellidos
+        return 'NOMBRE NO VÁLIDO'
+      }
+    }
+  }).mount('#app')
+</script>
+</body>
+</html>
