@@ -33,8 +33,11 @@
 
 <script>
   const { createApp } = Vue
+
+createApp({ data: function(){return {/**/}}, methods: {/**/} , computed: {/* */}  })
+
   createApp({
-    data(){
+    data: function(){
       return {
         nombres: '',
         apellidos: ''
