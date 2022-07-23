@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+<script src="https://unpkg.com/vue@3"></script>
+
+<div id="app" class="container" >
+  <main>
+    <!-- <form> -->
+    <h3 >Llene los datos:</h3>
+      <label for="">
+        Nombres:
+      <input type="text" v-model="nombres">
+      </label>
+      <label for="">
+        Apellidos:
+      <input type="text" v-model="apellidos">
+      </label>
+      <button v-bind:disabled="validateNames()">
+        Enviar formulario
+      </button>
+      <p v-if="!nombres && !apellidos">Por favor llene su nombre y apellido</p>
+      <p v-else-if="!nombres">Por favor llene su nombre</p>
+      <p v-else-if="!apellidos">Por favor llene sus apellidos</p>
+    <!-- </form> -->
+      <ul>
+        <li v-for="(elemento, index) in listaDeNombre" :key="index">
+          {{ elemento }} - {{ index }}
+        </li>
+      </ul>
+  </main>
+</div>
+
+<script>
+  const { createApp } = Vue
+
+createApp({ data: function(){return {/**/}}, methods: {/**/} , computed: {/* */}  })
+
+  createApp({
+    data: function(){
+      return {
+        nombres: '',
+        apellidos: '',
+        listaDeNombre: [
+          'Pepe Grillo',
+          'Micky Mouse',
+          'Homer Simpsons'
+        ]
+
+      }
+    },
+    methods: {
+      validateNames(){
+        if (!this.nombres || !this.apellidos )
+          return true
+        if ( /\d/.test(this.nombres) || /\d/.test(this.apellidos))
+          return true
+        else
+          return false
+      }
+    },
+    computed: {
+      fullName(){
+        if (this.nombres != '')
+          return this.nombres + ' ' + this.apellidos
+        return false
+      }
+    }
+  }).mount('#app')
+</script>
+</body>
+</html>
