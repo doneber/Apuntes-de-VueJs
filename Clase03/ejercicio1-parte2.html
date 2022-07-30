@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+    .inline-btn {
+        width: max-content;
+    }
+    .container-form {
+        /* display: flex; */
+        /* gap: 10px; */
+    }
+    article {
+        /* width: 100%; */
+    }
+  </style>
+</head>
+<body>
+<script src="https://unpkg.com/vue@3"></script>
+<div id="app" class="container" >
+  <form action="">
+    <input type="text">
+  </form>
+</div>
+<script>
+  const { createApp } = Vue
+  // Componente raiz
+  const app = createApp({
+    template: 
+    /*html*/
+    `
+    <nav>
+      <ul>
+        <li><strong>La tienda de BueJs 👍</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#" role="button">Clickea me</a></li>
+      </ul>
+    </nav>
+    <h2>Agregar producto</h2>
+    <div class="container-form">
+      <form @submit.prevent="agregaProducto">
+        <label>
+          Nombre del producto:
+          <input type="text" v-model="nuevoProducto.nombre" />
+        </label>
+        <label>
+          Descripcion del producto:
+          <input type="text" v-model="nuevoProducto.descripcion" />
+        </label>
+        <label>
+          URL de la imagen:
+          <input type="text" />
+        </label>
+        <input value="Agregar Producto" type="submit" />
+      </form>
+      <!--
+      <p>Vista previa:</p>
+      <producto
+        :nombre="nuevoProducto.nombre"
+        :descripcion="nuevoProducto.descripcion"
+        :imagen="nuevoProducto.imagen"
+        />
+    -->
+    </div>
+    <hr>
+      <h1>Productos:</h1>
+      <producto
+        v-for="producto in productos"
+        v-bind:nombre="producto.nombre"
+        v-bind:descripcion="producto.descripcion"
+        v-bind:imagen="producto.imagen"
+      />
+    `,
+    data: function(){
+      return {
+        nuevoProducto: {
+          nombre: null,
+          descripcion: null,
+          imagen: null
+        },
+        productos: [
+          {
+            nombre: "Teclado",
+            descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aspernatur",
+            imagen: "https://m.media-amazon.com/images/I/71Va9DgRgwL._SL1500_.jpg"
+          },
+                    {
+            nombre: "Monitor",
+            descripcion: "Adipisci aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+            imagen: ""
+          },
+        ]
+      }
+    },
+    methods: {
+      agregaProducto(){
+        //Agrega el producto del formulario
+        this.productos.push(this.nuevoProducto)
+
+        console.log('formulario enviado')
+      }
+    }
+
+  })
+
+  // Componente Produto
+  app.component('producto',{
+    template: 
+    /*html*/
+    `
+      <article>
+        <header>
+          <h3>{{nombre}}</h3>
+        </header>
+        <!-- <img v-bind:src="imagen" > -->
+        {{ descripcion }}
+        <footer>
+        <button class="inline-btn">Ver</button>
+        </footer>
+      </article>
+    `,
+    props: ['nombre', 'descripcion', 'imagen']
+  })
+  app.mount('#app')
+</script>
+</body>
+</html>
