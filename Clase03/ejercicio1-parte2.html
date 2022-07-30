@@ -29,52 +29,54 @@
 <script>
   const { createApp } = Vue
   // Componente raiz
-  const app = createApp({
-    template: 
-    /*html*/
-    `
-    <nav>
-      <ul>
-        <li><strong>La tienda de BueJs 👍</strong></li>
-      </ul>
-      <ul>
-        <li><a href="#" role="button">Clickea me</a></li>
-      </ul>
-    </nav>
-    <h2>Agregar producto</h2>
-    <div class="container-form">
-      <form @submit.prevent="agregaProducto">
-        <label>
-          Nombre del producto:
-          <input type="text" v-model="nuevoProducto.nombre" />
-        </label>
-        <label>
-          Descripcion del producto:
-          <input type="text" v-model="nuevoProducto.descripcion" />
-        </label>
-        <label>
-          URL de la imagen:
-          <input type="text" />
-        </label>
-        <input value="Agregar Producto" type="submit" />
-      </form>
-      <!--
-      <p>Vista previa:</p>
-      <producto
-        :nombre="nuevoProducto.nombre"
-        :descripcion="nuevoProducto.descripcion"
-        :imagen="nuevoProducto.imagen"
+  const app = createApp(
+    {
+        template: 
+        /*html*/
+        `
+        <nav>
+        <ul>
+            <li><strong>La tienda de BueJs 👍</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#" role="button">Clickea me</a></li>
+        </ul>
+        </nav>
+        <h2>Agregar producto</h2>
+        <div class="container-form">
+            <form @submit.prevent="agregaProducto">
+                <label>
+                Nombre del producto:
+                <input type="text" v-model="nuevoProducto.nombre" />
+                </label>
+                <label>
+                Descripcion del producto:
+                <input type="text" v-model="nuevoProducto.descripcion" />
+                </label>
+                <label>
+                URL de la imagen:
+                <input type="text" v-model="nuevoProducto.imagen" />
+                </label>
+                <input value="Agregar Producto" type="submit" />
+            </form>
+            <!--
+            <p>Vista previa:</p>
+            <producto
+                :nombre="nuevoProducto.nombre"
+                :descripcion="nuevoProducto.descripcion"
+                :imagen="nuevoProducto.imagen"
+                />
+            -->
+        </div>
+
+        <hr>
+        <h1>Productos:</h1>
+        <producto
+            v-for="producto in productos"
+            v-bind:nombre="producto.nombre"
+            v-bind:descripcion="producto.descripcion"
+            v-bind:imagen="producto.imagen"
         />
-    -->
-    </div>
-    <hr>
-      <h1>Productos:</h1>
-      <producto
-        v-for="producto in productos"
-        v-bind:nombre="producto.nombre"
-        v-bind:descripcion="producto.descripcion"
-        v-bind:imagen="producto.imagen"
-      />
     `,
     data: function(){
       return {
@@ -101,30 +103,51 @@
       agregaProducto(){
         //Agrega el producto del formulario
         this.productos.push(this.nuevoProducto)
-
+        this.nuevoProducto = {
+          nombre: null,
+          descripcion: null,
+          imagen: null
+        }
         console.log('formulario enviado')
       }
     }
-
-  })
+  }
+  )
 
   // Componente Produto
-  app.component('producto',{
+  app.component('producto',
+  {
     template: 
     /*html*/
     `
+        <dialog open v-if="toggleModal">
+            <article>
+                <header>
+                <a href="#close" aria-label="Close" class="close" @click="toggleModal=false" ></a>
+                {{ nombre }}
+                </header>
+                <img v-bind:src="imagen" width="350" >
+                <p>
+                    {{ descripcion }}
+                </p>
+            </article>
+        </dialog>
       <article>
         <header>
           <h3>{{nombre}}</h3>
         </header>
-        <!-- <img v-bind:src="imagen" > -->
         {{ descripcion }}
         <footer>
-        <button class="inline-btn">Ver</button>
+            <button class="inline-btn" v-on:click="toggleModal=true">Ver</button>
         </footer>
       </article>
     `,
-    props: ['nombre', 'descripcion', 'imagen']
+    props: ['nombre', 'descripcion', 'imagen'],
+    data: function(){
+        return {
+            toggleModal: false
+        }
+    }
   })
   app.mount('#app')
 </script>
