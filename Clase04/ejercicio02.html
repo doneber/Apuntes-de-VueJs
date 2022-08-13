@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+    .answerNo {
+      color: indigo;
+    }
+  </style>
+</head>
+<body>
+<script src="https://unpkg.com/vue@3"></script>
+
+<div id="app" class="container" >
+  <h1>Pregunta2</h1>
+  <form @submit.prevent="sendQuestion">
+    <label>
+      Has una pregunta de Si o No:
+      <input type="text" v-model="question">
+    </label>
+    <input type="submit" value="Enviar pregunta" :disabled="!rightQuestion">
+  </form>
+  <hr>
+  <h3>Respuesta</h3>
+  <p :class="stylesVector" >{{ answer }}</p>
+  <img v-bind:src="image">
+</div>
+<script>
+  const { createApp } = Vue
+
+  const app = createApp({
+    data: function(){
+      return {
+        question: null,
+        answer: null,
+        image: null,
+        rightQuestion: false,
+        stylesObject: {color: 'red'},
+        stylesVector: ['answerNo']
+      }
+    },
+    methods: {
+      async sendQuestion(){
+      this.answer = '...'
+      const answerData = await fetch('https://yesno.wtf/api').then(
+          res => res.json())
+      this.answer = answerData.answer
+      this.image = answerData.image
+      }
+    },
+    watch: {
+      question(newValue, oldValue){
+        if(newValue.indexOf('?')>=0){
+          this.rightQuestion = true
+        } else {
+          this.rightQuestion = false
+        }
+      },
+      answer(newValue){
+        if(newValue == 'yes'){
+          this.stylesObject = {color:'green',textTransform: 'uppercase'}
+        } else{
+          this.stylesObject =   {color:'red'}
+        }
+      }
+    }
+  })
+  app.mount('#app')
+</script>
+</body>
+</html>
